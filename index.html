@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donald's Bukka | Taste of Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; }
+        .menu-card { transition: transform 0.3s ease; }
+        .menu-card:hover { transform: translateY(-8px); }
+        
+        /* Using a reliable, high-quality image URL for the background */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                              url('https://images.unsplash.com/photo-1596560548486-f849c716298e?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-orange-50 text-gray-900">
+
+    <header class="relative h-[350px] flex flex-col justify-center items-center text-center overflow-hidden hero-bg">
+        <div class="relative z-10 p-6">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-2">Donald's <span class="text-orange-500">Bukka</span></h1>
+            <p class="text-orange-100 text-lg font-medium tracking-wide">Authentic Nigerian Delicacies Delivered</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold mb-4">Our Menu</h2>
+            
+            <div id="filter-container" class="flex flex-wrap justify-center gap-3 mt-6">
+                <button onclick="filterMenu('All')" class="px-5 py-2 bg-orange-600 text-white rounded-full font-semibold shadow-md hover:bg-orange-700 transition">All</button>
+                <button onclick="filterMenu('Signature')" class="px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Signature</button>
+                <button onclick="filterMenu('Local')" class="px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Local</button>
+                <button onclick="filterMenu('Drinks')" class="px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Drinks</button>
+            </div>
+        </div>
+
+        <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Items injected by JS -->
+        </div>
+    </main>
+
+    <script>
+        const menu = [
+            { name: "Pounded Yam & Egusi", price: "₦2,500", tag: "Signature" },
+            { name: "Jollof Rice & Turkey", price: "₦3,500", tag: "Signature" },
+            { name: "Amala & Ewedu", price: "₦2,000", tag: "Local" },
+            { name: "Banga Soup & Starch", price: "₦2,800", tag: "Local" },
+            { name: "Efo Riro", price: "₦1,500", tag: "Local" },
+            { name: "Chapman Refresh", price: "₦1,200", tag: "Drinks" }
+        ];
+
+        function filterMenu(category) {
+            const grid = document.getElementById('menu-grid');
+            const filtered = category === 'All' ? menu : menu.filter(item => item.tag === category);
+            
+            grid.innerHTML = filtered.map(item => `
+                <div class="menu-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100 hover:shadow-lg transition">
+                    <div class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold w-max mb-4">${item.tag}</div>
+                    <h3 class="text-xl font-bold mb-2">${item.name}</h3>
+                    <p class="text-2xl font-extrabold text-orange-600 mb-4">${item.price}</p>
+                    <button class="w-full py-2 border-2 border-orange-600 text-orange-600 rounded-lg hover:bg-orange-600 hover:text-white transition font-semibold">Add to Order</button>
+                </div>
+            `).join('');
+        }
+
+        // Initialize display
+        filterMenu('All');
+    </script>
+</body>
+</html>
