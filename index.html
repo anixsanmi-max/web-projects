@@ -15,8 +15,12 @@
                               url('https://images.unsplash.com/photo-1596560548486-f849c716298e?auto=format&fit=crop&q=80&w=2000');
             background-size: cover;
             background-position: center;
-        }
-    </style>
+        }        .filter-btn.active-filter {
+            background-color: #ea580c;
+            color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.4), 0 4px 6px -2px rgba(234, 88, 12, 0.2);
+            border-color: transparent;
+        }    </style>
 </head>
 <body class="bg-orange-50 text-gray-900">
 
@@ -31,10 +35,10 @@
         <div class="text-center mb-10">
             <h2 class="text-3xl font-bold mb-4">Our Menu</h2>
             <div id="filter-container" class="flex flex-wrap justify-center gap-3 mt-6">
-                <button onclick="filterMenu('All')" class="px-5 py-2 bg-orange-600 text-white rounded-full font-semibold shadow-md hover:bg-orange-700 transition">All</button>
-                <button onclick="filterMenu('Signature')" class="px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Signature</button>
-                <button onclick="filterMenu('Local')" class="px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Local</button>
-                <button onclick="filterMenu('Drinks')" class="px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Drinks</button>
+                <button onclick="filterMenu('All', this)" class="filter-btn px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">All</button>
+                <button onclick="filterMenu('Signature', this)" class="filter-btn px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Signature</button>
+                <button onclick="filterMenu('Local', this)" class="filter-btn px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Local</button>
+                <button onclick="filterMenu('Drinks', this)" class="filter-btn px-5 py-2 bg-white border border-orange-200 hover:bg-orange-100 rounded-full font-semibold transition">Drinks</button>
             </div>
         </div>
 
@@ -52,9 +56,16 @@
             { name: "Chapman Refresh", price: "₦1,200", tag: "Drinks", img: "images/fruit-juice.jpg" }
         ];
 
-        function filterMenu(category) {
+        function filterMenu(category, button) {
             const grid = document.getElementById('menu-grid');
             const filtered = category === 'All' ? menu : menu.filter(item => item.tag === category);
+
+            if (button) {
+                document.querySelectorAll('#filter-container .filter-btn').forEach(btn => {
+                    btn.classList.remove('active-filter');
+                });
+                button.classList.add('active-filter');
+            }
             
             grid.innerHTML = filtered.map(item => `
                 <div class="menu-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100 hover:shadow-lg transition">
@@ -69,7 +80,7 @@
             `).join('');
         }
 
-        filterMenu('All');
+        filterMenu('All', document.querySelector('#filter-container .filter-btn'));
     </script>
 </body>
 </html>
